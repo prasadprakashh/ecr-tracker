@@ -1,0 +1,491 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Free ECR Tracker + Open Source Options</title>
+  <style>
+    :root{
+      --bg:#0f1724; --card:#0b1220; --muted:#9aa4b2; --accent:#4f9ef6;
+      --success:#22c55e; --danger:#ef4444; --glass: rgba(255,255,255,0.03);
+      --radius:10px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      color: #e6eef8;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; padding:28px; background:linear-gradient(180deg,#071025 0%, #071827 60%); min-height:100vh;
+    }
+    header{display:flex; gap:18px; align-items:center; margin-bottom:20px}
+    h1{margin:0; font-size:20px}
+    p.lead{margin:0; color:var(--muted)}
+    .container{display:grid; grid-template-columns: 420px 1fr; gap:20px; align-items:start}
+    .card{background:var(--card); border-radius:var(--radius); padding:16px; box-shadow:0 6px 18px rgba(2,6,23,0.6)}
+    table{width:100%; border-collapse:collapse}
+    th,td{padding:8px 6px; text-align:left; font-size:13px}
+    th{color:var(--muted); font-weight:600; font-size:12px}
+    a.link{color:var(--accent); text-decoration:none}
+    .small{font-size:13px; color:var(--muted)}
+    /* Tracker styles */
+    .tracker {display:flex; flex-direction:column; gap:12px}
+    label{display:block; font-size:13px; margin-bottom:6px; color:var(--muted)}
+    input[type=text], select, textarea{
+      width:100%; padding:10px; border-radius:8px; border:1px solid rgba(255,255,255,0.04);
+      background:var(--glass); color:inherit; outline:none; font-size:14px;
+    }
+    textarea{min-height:80px; resize:vertical}
+    .row{display:flex; gap:10px}
+    .col{flex:1}
+    .btn{display:inline-block; padding:8px 12px; border-radius:8px; cursor:pointer; background:var(--accent); color:#fff; border:none}
+    .btn.ghost{background:transparent; border:1px solid rgba(255,255,255,0.06)}
+    .list{margin-top:8px; display:grid; gap:8px}
+    .item{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); padding:10px; border-radius:8px; display:flex; justify-content:space-between; gap:10px; align-items:center}
+    .meta{font-size:12px; color:var(--muted)}
+    .status{padding:6px 8px; border-radius:6px; font-weight:600; font-size:12px}
+    .status.open{background:rgba(79,158,246,0.12); color:var(--accent)}
+    .status.inprogress{background:rgba(255,191,0,0.08); color:#ffb400}
+    .status.closed{background:rgba(34,197,94,0.08); color:var(--success)}
+    .controls button{margin-left:6px}
+    .summary{display:flex; gap:12px; flex-wrap:wrap}
+    .badge{background:rgba(255,255,255,0.03); padding:8px 10px; border-radius:8px; font-size:13px}
+    footer{margin-top:18px; color:var(--muted); font-size:13px}
+    @media (max-width:980px){ .container{grid-template-columns:1fr} }
+  </style>
+</head>
+<body>
+
+<header>
+  <div style="width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#7bd1ff);display:flex;align-items:center;justify-content:center;font-weight:700;color:#02233b">ECR</div>
+  <div>
+    <h1>Free ECR Tracker + Open Source Options</h1>
+    <p class="lead">Self-hosted tool suggestions + lightweight browser app you can use right away (stores data in your browser).</p>
+  </div>
+</header>
+
+<div class="container">
+  <!-- Left: OSS options -->
+  <div>
+    <div class="card">
+      <h3 style="margin-top:0">All-time free / open-source tools</h3>
+      <p class="small">These are full-featured solutions you can self-host if you want a production system (more power + control than the simple app on the right).</p>
+
+      <table aria-label="tools">
+        <thead>
+          <tr><th>Tool</th><th style="width:1px">Why use it</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Redmine</strong><div class="small">redmine.org</div></td>
+            <td>Flexible project & issue tracker — use Issues as ECRs, assign users, workflows, Gantt, plugins.</td>
+          </tr>
+          <tr>
+            <td><strong>Phabricator</strong><div class="small">phacility / community forks</div></td>
+            <td>Powerful dev platform: code review, tasks, custom workflows. Community forks maintained after upstream.</td>
+          </tr>
+          <tr>
+            <td><strong>Zammad</strong><div class="small">zammad.org</div></td>
+            <td>Open-source helpdesk/ticketing system — adaptable to change requests and approvals.</td>
+          </tr>
+          <tr>
+            <td><strong>Trac</strong><div class="small">edgewall.org/trac</div></td>
+            <td>Lightweight issue tracker integrated with version control — simpler footprint for small teams.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <hr style="border:none;border-top:1px solid rgba(255,255,255,0.03);margin:12px 0" />
+
+      <h4 style="margin:0 0 8px 0">Notes on self-hosting</h4>
+      <ul style="color:var(--muted);padding-left:18px;margin:0 0 8px 0">
+        <li>Self-hosted tools need a server or VM (or a cheap cloud instance) and basic maintenance (backups, security updates).</li>
+        <li>Map your ECR lifecycle to the tool's workflow (statuses, custom fields, approval steps).</li>
+        <li>If you want I can provide Docker install commands or a minimal Redmine setup script — tell me your environment.</li>
+      </ul>
+
+      <div style="margin-top:8px">
+        <a class="link" href="https://www.redmine.org/" target="_blank" rel="noopener">Redmine →</a> &nbsp; · &nbsp;
+        <a class="link" href="https://www.zammad.org/" target="_blank" rel="noopener">Zammad →</a> &nbsp; · &nbsp;
+        <a class="link" href="https://edgewall.org/trac/" target="_blank" rel="noopener">Trac →</a>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:12px">
+      <h3 style="margin:0 0 8px 0">Quick decision guide</h3>
+      <div class="small">
+        <strong>Small teams / no infra:</strong> use the local browser app below or simple hosted issue trackers (GitHub/GitLab issues).<br/>
+        <strong>Growing teams / need audits:</strong> Redmine or Zammad with DB backups.<br/>
+        <strong>Dev heavy (code review + tasks):</strong> Phabricator (community forks) or GitLab.
+      </div>
+    </div>
+  </div>
+
+  <!-- Right: ECR Tracker App -->
+  <div>
+    <div class="card">
+      <h3 style="margin-top:0">ECR Tracker — browser app (Free, runs locally)</h3>
+      <div class="small">Create, edit, assign and summarize ECRs. Data saved locally (in your browser). Use "Export JSON" to backup or share.</div>
+
+      <div style="margin-top:12px" class="tracker">
+        <div>
+          <label for="title">Title</label>
+          <input id="title" type="text" placeholder="E.g. Replace valve assembly in unit #3" />
+        </div>
+
+        <div>
+          <label for="desc">Description</label>
+          <textarea id="desc" placeholder="Describe change request, reason, impact..."></textarea>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <label for="assignee">Assignee</label>
+            <input id="assignee" type="text" placeholder="Person or team" />
+          </div>
+          <div style="width:140px">
+            <label for="priority">Priority</label>
+            <select id="priority">
+              <option value="Low">Low</option>
+              <option value="Normal" selected>Normal</option>
+              <option value="High">High</option>
+              <option value="Critical">Critical</option>
+            </select>
+          </div>
+          <div style="width:140px">
+            <label for="status">Status</label>
+            <select id="status">
+              <option value="Open">Open</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Closed">Closed</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:8px; align-items:center">
+          <button id="addBtn" class="btn">Add ECR</button>
+          <button id="clearBtn" class="btn ghost">Clear Form</button>
+          <button id="exportBtn" class="btn ghost" title="Download JSON">Export JSON</button>
+          <button id="importBtn" class="btn ghost" title="Load JSON">Import JSON</button>
+          <input id="fileInput" type="file" accept="application/json" style="display:none" />
+        </div>
+
+        <div style="display:flex; gap:8px; margin-top:12px; align-items:center">
+          <input id="search" type="text" placeholder="Search title / desc / assignee" style="flex:1;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:var(--glass)" />
+          <select id="filterStatus" style="padding:8px;border-radius:8px;background:var(--glass);border:1px solid rgba(255,255,255,0.04)">
+            <option value="">All statuses</option>
+            <option>Open</option><option>In Progress</option><option>Closed</option>
+          </select>
+          <select id="filterAssignee" style="padding:8px;border-radius:8px;background:var(--glass);border:1px solid rgba(255,255,255,0.04)">
+            <option value="">All assignees</option>
+          </select>
+        </div>
+
+        <div class="list" id="list"></div>
+
+        <div style="margin-top:8px; display:flex; justify-content:space-between; align-items:center; gap:12px">
+          <div class="summary" id="summary"></div>
+          <div>
+            <button id="exportCsv" class="btn ghost">Summary → CSV</button>
+            <button id="resetStorage" class="btn ghost" title="Delete all ECRs">Reset</button>
+          </div>
+        </div>
+
+      </div>
+
+      <footer>
+        Tip: This app stores data in your browser only. Use "Export" before switching devices or clearing browser data.
+      </footer>
+    </div>
+  </div>
+</div>
+
+<script>
+/* Simple ECR tracker using localStorage
+   Features:
+   - Add / Edit ECR (title, desc, assignee, priority, status, createdAt, id)
+   - Change status & assign
+   - Search & filter
+   - Summary counts and CSV export
+   - Export / Import JSON
+*/
+(function(){
+  const qs = sel => document.querySelector(sel);
+  const $title = qs('#title'), $desc = qs('#desc'), $assignee = qs('#assignee'), $priority = qs('#priority'), $status = qs('#status');
+  const $addBtn = qs('#addBtn'), $clearBtn = qs('#clearBtn'), $list = qs('#list'), $search = qs('#search');
+  const $filterStatus = qs('#filterStatus'), $filterAssignee = qs('#filterAssignee');
+  const $summary = qs('#summary'), $exportBtn = qs('#exportBtn'), $fileInput = qs('#fileInput'), $importBtn = qs('#importBtn');
+  const $exportCsv = qs('#exportCsv'), $resetStorage = qs('#resetStorage');
+
+  const STORAGE_KEY = 'ecr_tracker_items_v1';
+  let editingId = null;
+
+  function load() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw) : [];
+    } catch(e){ return []; }
+  }
+  function save(items){ localStorage.setItem(STORAGE_KEY, JSON.stringify(items)); }
+  function uid(){ return 'ecr_' + Date.now() + '_' + Math.floor(Math.random()*9000+1000); }
+
+  function renderList(){
+    const items = load();
+    const q = $search.value.trim().toLowerCase();
+    const statusFilter = $filterStatus.value;
+    const assigneeFilter = $filterAssignee.value;
+    $list.innerHTML = '';
+    const assignees = new Set();
+    let visible = 0;
+    items.slice().reverse().forEach(item=>{
+      assignees.add(item.assignee || '');
+      if(statusFilter && item.status !== statusFilter) return;
+      if(assigneeFilter && item.assignee !== assigneeFilter) return;
+      if(q && !(
+        (item.title||'').toLowerCase().includes(q) ||
+        (item.description||'').toLowerCase().includes(q) ||
+        (item.assignee||'').toLowerCase().includes(q)
+      )) return;
+
+      visible++;
+      const div = document.createElement('div');
+      div.className = 'item';
+      div.innerHTML = `
+        <div style="flex:1;min-width:0">
+          <div style="display:flex;gap:8px;align-items:center;justify-content:space-between">
+            <div style="min-width:0">
+              <div style="font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${escapeHtml(item.title)}</div>
+              <div class="meta">${escapeHtml(item.description || '').slice(0,120)}${(item.description||'').length>120?'…':''}</div>
+            </div>
+            <div style="text-align:right;min-width:150px">
+              <div class="meta">#${item.id} • ${new Date(item.createdAt).toLocaleString()}</div>
+              <div class="meta">Priority: ${escapeHtml(item.priority||'')}</div>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px">
+          <div style="display:flex;align-items:center;gap:8px">
+            <div class="status ${statusClass(item.status)}">${escapeHtml(item.status)}</div>
+          </div>
+          <div style="display:flex;gap:6px;align-items:center">
+            <div class="meta">${escapeHtml(item.assignee || 'Unassigned')}</div>
+            <div class="controls">
+              <button class="btn ghost" data-action="assign" data-id="${item.id}">Assign</button>
+              <button class="btn ghost" data-action="edit" data-id="${item.id}">Edit</button>
+              <button class="btn ghost" data-action="status" data-id="${item.id}">Change</button>
+              <button class="btn ghost" data-action="delete" data-id="${item.id}">Delete</button>
+            </div>
+          </div>
+        </div>
+      `;
+      $list.appendChild(div);
+    });
+
+    // populate assignee filter
+    const currentAssignees = Array.from(load().reduce((s,it)=>{ s.add(it.assignee||''); return s}, new Set())).filter(a=>a!=='');
+    $filterAssignee.innerHTML = '<option value="">All assignees</option>';
+    currentAssignees.forEach(a=>{
+      const opt = document.createElement('option'); opt.value = a; opt.textContent = a; $filterAssignee.appendChild(opt);
+    });
+
+    if(visible===0) $list.innerHTML = '<div class="meta">No ECRs to show. Add one using the form above.</div>';
+
+    renderSummary();
+  }
+
+  function renderSummary(){
+    const items = load();
+    const counts = items.reduce((acc,it)=>{
+      acc.status[it.status] = (acc.status[it.status]||0)+1;
+      acc.assignee[it.assignee||'Unassigned'] = (acc.assignee[it.assignee||'Unassigned']||0)+1;
+      return acc;
+    }, {status:{}, assignee:{}});
+    $summary.innerHTML = '';
+    // status badges
+    for(const s of Object.keys(counts.status)){
+      const el = document.createElement('div'); el.className='badge'; el.textContent = s + ': ' + counts.status[s];
+      $summary.appendChild(el);
+    }
+    // top assignees
+    const assigneeEntries = Object.entries(counts.assignee).sort((a,b)=>b[1]-a[1]).slice(0,4);
+    assigneeEntries.forEach(([a,c])=>{
+      const el = document.createElement('div'); el.className='badge'; el.textContent = (a||'Unassigned') + ': ' + c;
+      $summary.appendChild(el);
+    });
+  }
+
+  function statusClass(status){
+    if(!status) return '';
+    const s = status.toLowerCase().replace(/\s+/g,'');
+    if(s.includes('open')) return 'open';
+    if(s.includes('progress')) return 'inprogress';
+    if(s.includes('close')) return 'closed';
+    return '';
+  }
+
+  function addEcr(){
+    const title = $title.value.trim();
+    if(!title){ alert('Enter title'); $title.focus(); return; }
+    const items = load();
+    if(editingId){
+      const idx = items.findIndex(it=>it.id===editingId);
+      if(idx>=0){
+        items[idx].title = title;
+        items[idx].description = $desc.value.trim();
+        items[idx].assignee = $assignee.value.trim();
+        items[idx].priority = $priority.value;
+        items[idx].status = $status.value;
+        items[idx].updatedAt = Date.now();
+        save(items);
+        editingId = null;
+        $addBtn.textContent = 'Add ECR';
+      }
+    } else {
+      const item = {
+        id: uid(),
+        title,
+        description: $desc.value.trim(),
+        assignee: $assignee.value.trim(),
+        priority: $priority.value,
+        status: $status.value,
+        createdAt: Date.now()
+      };
+      items.push(item);
+      save(items);
+    }
+    clearForm();
+    renderList();
+  }
+
+  function clearForm(){
+    $title.value = '';
+    $desc.value = '';
+    $assignee.value = '';
+    $priority.value = 'Normal';
+    $status.value = 'Open';
+    editingId = null;
+    $addBtn.textContent = 'Add ECR';
+  }
+
+  function escapeHtml(s){
+    return (s||'').toString().replace(/[&<>"']/g, function(m){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;', "'":'&#39;'}[m];
+    });
+  }
+
+  // click actions
+  $list.addEventListener('click', function(e){
+    const btn = e.target.closest('button[data-action]');
+    if(!btn) return;
+    const id = btn.dataset.id;
+    const action = btn.dataset.action;
+    const items = load();
+    const idx = items.findIndex(it=>it.id===id);
+    if(idx<0) return;
+    if(action === 'edit'){
+      const it = items[idx];
+      editingId = it.id;
+      $title.value = it.title;
+      $desc.value = it.description || '';
+      $assignee.value = it.assignee || '';
+      $priority.value = it.priority || 'Normal';
+      $status.value = it.status || 'Open';
+      $addBtn.textContent = 'Save Changes';
+      window.scrollTo({top:0, behavior:'smooth'});
+    } else if(action === 'delete'){
+      if(!confirm('Delete this ECR?')) return;
+      items.splice(idx,1); save(items); renderList();
+    } else if(action === 'assign'){
+      const newAssignee = prompt('Assign to (enter name/team):', items[idx].assignee || '');
+      if(newAssignee !== null){
+        items[idx].assignee = newAssignee.trim();
+        items[idx].updatedAt = Date.now();
+        save(items); renderList();
+      }
+    } else if(action === 'status'){
+      const newStatus = prompt('Set status (Open / In Progress / Closed):', items[idx].status || 'Open');
+      if(newStatus !== null && newStatus.trim()!==''){
+        items[idx].status = newStatus.trim();
+        items[idx].updatedAt = Date.now();
+        save(items); renderList();
+      }
+    }
+  });
+
+  // search / filters
+  [$search, $filterStatus, $filterAssignee].forEach(el => el.addEventListener('input', renderList));
+
+  $addBtn.addEventListener('click', addEcr);
+  $clearBtn.addEventListener('click', function(){ if(confirm('Clear form?')) clearForm(); });
+
+  // export/import JSON
+  $exportBtn.addEventListener('click', function(){
+    const data = load();
+    const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href = url; a.download = 'ecr-export-' + (new Date()).toISOString().slice(0,19).replace(/[:T]/g,'-') + '.json';
+    document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+  });
+
+  $importBtn.addEventListener('click', function(){ $fileInput.click(); });
+  $fileInput.addEventListener('change', function(e){
+    const f = e.target.files[0];
+    if(!f) return;
+    const reader = new FileReader();
+    reader.onload = function(ev){
+      try{
+        const parsed = JSON.parse(ev.target.result);
+        if(!Array.isArray(parsed)) throw new Error('Invalid format');
+        // merge or replace? we'll ask
+        if(confirm('Replace existing ECRs with imported data? Cancel to append.')) {
+          save(parsed);
+        } else {
+          const current = load();
+          const merged = current.concat(parsed);
+          save(merged);
+        }
+        renderList();
+        alert('Import successful');
+      }catch(err){
+        alert('Import failed: ' + err.message);
+      }
+    };
+    reader.readAsText(f);
+    e.target.value = '';
+  });
+
+  // export summary CSV (simple)
+  $exportCsv.addEventListener('click', function(){
+    const items = load();
+    if(items.length===0){ alert('No items to export'); return; }
+    const rows = [['ID','Title','Assignee','Status','Priority','CreatedAt','Description']];
+    items.forEach(it => rows.push([it.id, it.title, it.assignee||'', it.status, it.priority, new Date(it.createdAt).toLocaleString(), it.description.replace(/\r?\n/g,' ')]));
+    const csv = rows.map(r => r.map(cell => '"' + (''+cell).replace(/"/g,'""') + '"').join(',')).join('\n');
+    const blob = new Blob([csv], {type:'text/csv'}); const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href = url; a.download = 'ecr-summary.csv'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+  });
+
+  $resetStorage.addEventListener('click', function(){
+    if(!confirm('This will delete ALL ECRs stored in this browser. Are you sure?')) return;
+    localStorage.removeItem(STORAGE_KEY); renderList();
+  });
+
+  // helper to set initial demo data if none exists (optional)
+  (function ensureDemo(){
+    const items = load();
+    if(items.length===0){
+      const demo = [
+        { id: uid(), title: 'Valve assembly replacement - Unit 3', description: 'Leak observed in valve assembly. Replace and test.', assignee:'Ravi', priority:'High', status:'Open', createdAt: Date.now()-86400000 },
+        { id: uid(), title: 'Firmware update request - Controller A', description: 'Update to latest stable firmware to fix timing issue.', assignee:'FirmwareTeam', priority:'Normal', status:'In Progress', createdAt: Date.now()-3600000 },
+        { id: uid(), title: 'Modify bolt spec for bracket', description: 'Change bolt grade from 8.8 to 10.9 for better strength.', assignee:'MechTeam', priority:'Low', status:'Closed', createdAt: Date.now()-604800000 }
+      ];
+      save(demo);
+    }
+  })();
+
+  // initial render
+  renderList();
+
+})();
+</script>
+
+</body>
+</html>
