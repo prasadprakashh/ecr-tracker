@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ECR Tracker</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f3f4f6;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      background: #2563eb;
+      color: white;
+      padding: 15px;
+      border-radius: 10px;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    input, button {
+      padding: 10px;
+      margin: 5px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: center;
+    }
+    th {
+      background: #2563eb;
+      color: white;
+    }
+    .delete-btn {
+      background: red;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .summary-box {
+      margin-top: 20px;
+      padding: 15px;
+      background: #e5e7eb;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h1>ECR Tracker</h1>
+
+  <div class="container">
+
+    <h3>Add New ECR</h3>
+    <input type="text" id="ecrId" placeholder="Enter ECR ID">
+    <input type="text" id="ecrDesc" placeholder="Enter Description">
+    <button onclick="addECR()">Add ECR</button>
+
+    <table id="ecrTable">
+      <thead>
+        <tr>
+          <th>ECR ID</th>
+          <th>Description</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <div class="summary-box">
+      <h3>Summary</h3>
+      <p>Total ECRs: <span id="totalECR">0</span></p>
+    </div>
+
+  </div>
+
+  <script>
+    function addECR() {
+      let id = document.getElementById("ecrId").value;
+      let desc = document.getElementById("ecrDesc").value;
+      if(id === "" || desc === ""){
+        alert("Please enter both ID and description!");
+        return;
+      }
+
+      let table = document.getElementById("ecrTable").querySelector("tbody");
+      let row = document.createElement("tr");
+
+      row.innerHTML = `
+        <td>${id}</td>
+        <td>${desc}</td>
+        <td><button class="delete-btn" onclick="deleteRow(this)">Delete</button></td>
+      `;
+
+      table.appendChild(row);
+      updateSummary();
+
+      document.getElementById("ecrId").value = "";
+      document.getElementById("ecrDesc").value = "";
+    }
+
+    function deleteRow(button) {
+      button.parentElement.parentElement.remove();
+      updateSummary();
+    }
+
+    function updateSummary(){
+      let count = document.getElementById("ecrTable").querySelectorAll("tbody tr").length;
+      document.getElementById("totalECR").innerText = count;
+    }
+  </script>
+
+</body>
+</html>
